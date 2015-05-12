@@ -13,7 +13,8 @@ RUN apt-get update && \
     add-apt-repository ppa:webupd8team/java &&\
     apt-get update &&\
     apt-get install -y oracle-java7-installer &&\
-    apt-get install -y oracle-java7-set-default
+    apt-get install -y oracle-java7-set-default &&\
+    apt-get clean all
 
 # INSTALL TOMCAT
 RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz && \
@@ -35,7 +36,3 @@ ADD create_tomcat_admin_user.sh /tomcat/create_tomcat_admin_user.sh
 # Adding run script
 ADD run.sh /tomcat/run.sh
 RUN chmod +x /tomcat/*.sh
-
-# Creating admin user.
-#CMD ["/tomcat/create_tomcat_admin_user.sh"]
-ENTRYPOINT /tomcat/run.sh
